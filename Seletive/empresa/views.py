@@ -1,7 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .models import Tecnologias
 # Create your views here.
 
+
 def nova_empresa(request):
-    return render(request, 'nova_empresa.html')
+    if request.method == "GET":
+        techs = Tecnologias.objects.all()
+        return render(request, 'nova_empresa.html', {'techs': techs})
+    elif request.method == "POST":
+        nome = request.POST.get('nome')
+        email = request.POST.get('email')
+        cidade = request.POST.get('cidade')
+        endereco = request.POST.get('endereco')
+        nicho = request.POST.get('nicho')
+        caracteristicas = request.POST.get('caracteristicas')
+        tecnologias = request.POST.getlist('tecnologias')
+        logo = request.FILES.get('logo')
