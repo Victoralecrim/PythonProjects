@@ -3,7 +3,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
+    {% comment %} CSS principal {% endcomment %}
     <link href="{% static 'base/css/base.css' %}" rel="stylesheet" />
+    {% comment %} CSS de empresas {% endcomment %}
+    <link rel="stylesheet" href="{% static 'empresa/css/empresas.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block 'title' %}{% endblock%}</title>
     <link
