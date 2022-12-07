@@ -16,7 +16,7 @@
                     {% for message in messages %}
                         <section class="alert {{message.tags}}">
                             {{message}}
-                        </section>
+                         </section>
                     {% endfor %}
                 {% endif %}
                 <h2 class="titulo">Gerenciar empresas</h2>
@@ -57,7 +57,9 @@
                       {% for empresa in empresas %}
                            
                             <tr {% if not forloop.counter|is_par %} class="tabela-linha" {% endif %}>
-                                <td>{{empresa.nome}}</td>
+                                <td>
+                                    <a href="{% url 'empresa_unica' empresa.id %}">{{empresa.nome}}</a>
+                                 </td>
                                 <td>{{empresa.endereco}}</td>
                                 <td>
                                    
