@@ -3,9 +3,10 @@ from empresa.models import Vagas
 from django.http import HttpResponse, Http404
 from django.contrib import messages
 from django.contrib.messages import constants
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404   
+  
+from .models import Tarefa
 # Create your views here.
-
 
 def nova_vaga(request):
     if request.method == "POST":
@@ -41,3 +42,22 @@ def nova_vaga(request):
     
     elif request.method == "GET":
         raise Http404()
+
+def vaga(request, id):
+    vaga = get_object_or_404(Vagas, id=id)
+    tarefas = Tarefa.objects.filter(vaga=vaga).filter(realizada=False)
+    return render(request, 'vaga.html', {'vaga': vaga,
+                                         'tarefas': tarefas,})
+
+def nova_tarefa(request, id_vaga):
+    titulo = request.POST.get('titulo')
+    prioridade = request.POST.get("prioridade")
+    data = request.POST.get('data')
+    
+    tarefa = Tarefa(vaga_id=id_vaga,
+                    titulo=titulo,
+                    prioridade=prioridade,
+                    data=data)
+    tarefa.save()
+    messages.add_message(request, constants.SUCCESS, 'Tarefa criada com sucesso')
+    return redirect(f'/vagas/vaga/{id_vaga}')
